@@ -1,5 +1,5 @@
 
-def prefix = ""
+def prefix = "https://github.com/java-moudle/repo/raw/master/"
 def repoPath = "repo/"
 
 def applyList = [
@@ -12,22 +12,22 @@ def downloadList = applyList + [
 ] as Collection<String>
 
 def downloadMap = downloadList.collectEntries {
-    //println "map: $repoPath$it"
-    new MapEntry("$repoPath$it", new File(rootDir, "$repoPath$it"))
+    //println "map: $it"
+    new MapEntry(it, new File(rootDir, "$repoPath$it"))
 } as Map<String, File>
 
 downloadMap.each { item ->
 
-    //println "install $repoPath$item.key, file://$item.value"
+    //println "install $item.key, file://$item.value"
 
     item.value.with {
         if (!exists()) {
             withOutputStream { outStream ->
-                new URL("${prefix}reop/$item.key").withInputStream { inStream ->
+                new URL("${prefix}${item.key}").withInputStream { inStream ->
                     outStream << inStream
                 }
             }
-            println "install: $repoPath$item.key, file://$item.value"
+            println "install: $item.key, file://$item.value"
         }
     }
 
