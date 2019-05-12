@@ -22,6 +22,7 @@ downloadMap.each { item ->
 
     item.value.with {
         if (!exists()) {
+            parentFile.mkdirs()
             withOutputStream { outStream ->
                 new URL("${prefix}${item.key}").withInputStream { inStream ->
                     outStream << inStream
