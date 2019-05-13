@@ -65,9 +65,3 @@ File.metaClass.unzip = { File destination, boolean overwrite = false ->
         }
     }
 }
-
-//def repoTools = "https://gitee.com/wittyneko/gradle-tools/repository/archive/master.zip"
-//def repoTools = "https://github.com/wittyneko/gradle-tools/archive/master.zip"
-//println new URL(repoTools).download(new File(rootDir, "gradle-tools.zip"))
-//new File(rootDir, "buildSrc").zip(new File(rootDir, "buildSrc.zip"), true)
-//new File(rootDir, "buildSrc.zip").unzip(new File(rootDir, 'cache'), true)
