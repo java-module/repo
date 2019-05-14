@@ -123,4 +123,5 @@ String.metaClass.repoRaw = {
 
 ext {
     user_home = System.properties['user.home']
+    repo_caches = "${user_home}/.repo_modules/caches"
 }

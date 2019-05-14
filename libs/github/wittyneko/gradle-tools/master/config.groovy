@@ -1,11 +1,10 @@
-def cache = "${user_home}/.repo/cache"
 
 def repoInfo = 'github/wittyneko/gradle-tools/master/config.groovy'.gitRepoInfo(null, null, true, 'modules')
 def repoZip = repoInfo.gitRepoZip()
 
 def module_name = repoInfo.module.name
 def module_repo = repoInfo.module.repo as File
-def module_cache_dir = new File(cache, module_name.replace('.', '/'))
+def module_cache_dir = new File(repo_caches, module_name.replace('.', '/'))
 def module_cache_file = new File(module_cache_dir, 'archive.zip')
 
 //println "$module_name info: " + repoInfo
