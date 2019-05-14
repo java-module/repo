@@ -1,5 +1,5 @@
 
-def prefix = "https://github.com/java-moudle/repo/raw/master/"
+def prefix = "https://github.com/java-module/repo/raw/master/"
 def repoPath = "repo/"
 
 def applyList = [
