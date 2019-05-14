@@ -1,5 +1,4 @@
-
-String.metaClass.gitRepoInfo = { String name = null, String tag = null, boolean overHost = true ->
+String.metaClass.gitRepoInfo = { String name = null, String tag = null, boolean overHost = true, String repo = 'repo' ->
     def info_index = split('/') as String[]
     def info_host
     switch (info_index[0]) {
@@ -22,13 +21,13 @@ String.metaClass.gitRepoInfo = { String name = null, String tag = null, boolean 
             'repository'     : info_index[2],
             'user_repository': "${info_index[1]}/${info_index[2]}",
             'tags'           : "${tag != null ? tag : 3 < info_index.length ? info_index[3] : 'master'}",
-            'filename'       : "${name != null ? name : 4 < info_index.length ? info_index.with { drop(4) }.join('/') : 'config.groovy'} ",
+            'filename'       : "${name != null ? name : 4 < info_index.length ? info_index.with { drop(4) }.join('/') : 'config.groovy'}",
             'index'          : info_index,
             'module'         : info_module,
     ]
     info_module << [
             'name': info_module.index.join('.'),
-            'repo': new File(rootDir, "repo/${info_module.index.join('/')}"),
+            'repo': new File(rootDir, "$repo/${info_module.index.join('/')}"),
     ]
     info
 }
@@ -75,10 +74,37 @@ String.metaClass.repoModuleInfo = { String type = null, String name = null, Stri
             'module_type': index[0],
             'module_name': name_index.join('/'),
     ]
-    info_repo << info_repo.module_name.gitRepoInfo(name, tag, false)
+    info_repo << info_repo.module_name.gitRepoInfo(name, tag, false, 'modules')
     def path = "github/java-module/repo/master/${index.join('/')}"
     def info = path.gitRepoInfo() << [repo: info_repo]
     info
+}
+
+String.metaClass.repoInfo = { String type = null, String name = null, String tag = null ->
+    def index = split('/') as String[]
+    if (type != null) index = [type].toArray() + index
+    def name_index = index.drop(1)
+    def info_repo = [
+            'module_type': index[0],
+            'module_name': name_index.join('/'),
+            'module_file': new File(rootDir, "repo/${index.join('/')}"),
+    ]
+    def path = "github/java-module/repo/master/${index.join('/')}"
+    def info = path.gitRepoInfo(null, tag) << [repo: info_repo]
+    info
+}
+
+String.metaClass.repoDownload = {
+    def info = repoInfo()
+    def info_raw = info.gitRepoRaw()
+    def info_file = info.repo.module_file
+    info_file.with {
+        if (!exists()) {
+            parentFile?.mkdirs()
+            new URL(info_raw).download(it)
+        }
+    }
+    info_file
 }
 
 Map.metaClass.repoRaw = { String name = null, String tag = null ->
@@ -92,4 +118,9 @@ Map.metaClass.repoRaw = { String name = null, String tag = null ->
 String.metaClass.repoRaw = {
 
     "https://github.com/java-module/repo/raw/master/$delegate"
+}
+
+
+ext {
+    user_home = System.properties['user.home']
 }

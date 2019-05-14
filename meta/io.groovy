@@ -65,3 +65,26 @@ File.metaClass.unzip = { File destination, boolean overwrite = false ->
         }
     }
 }
+
+File.metaClass.copyTo = { File destination, boolean overwrite = false ->
+
+    if (overwrite) destination.deleteDir()
+
+    def delegate = delegate as File
+    def prefix = delegate.canonicalPath.size()
+    delegate.eachFileRecurse(FileType.FILES) { inFile ->
+
+        def entryName = inFile.canonicalPath.substring(prefix)
+
+        def outFile = new File(destination, entryName)
+        println "copy file://$inFile.canonicalPath, file://$outFile.canonicalPath"
+
+        outFile.parentFile?.mkdirs()
+        outFile.withOutputStream { outStream ->
+
+            inFile.withInputStream { inStream ->
+                outStream << inStream
+            }
+        }
+    }
+}
