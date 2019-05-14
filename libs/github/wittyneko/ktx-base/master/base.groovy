@@ -2,7 +2,7 @@ def repoInfo = 'github/wittyneko/ktx-base/master/base.groovy'.gitRepoInfo(null, 
 def repoZip = repoInfo.gitRepoZip()
 
 def module_tag = repoInfo.tags
-
+def module_parent = repoInfo.repository
 def module_sub = repoInfo.filename.with { substring(0, lastIndexOf('.')) }
 def module_name = "${repoInfo.module.name}.$module_sub"
 def module_repo = new File(repoInfo.module.repo, module_sub)
@@ -37,6 +37,6 @@ new File(module_cache_dir, module_tag).with {
 module_repo.with {
     if (!exists()) {
         parentFile?.mkdirs()
-        new File(module_cache_dir, "$module_tag/ktx-base-$module_tag/$module_sub").copyTo(it)
+        new File(module_cache_dir, "$module_tag/$module_parent-$module_tag/$module_sub").copyTo(it)
     }
 }

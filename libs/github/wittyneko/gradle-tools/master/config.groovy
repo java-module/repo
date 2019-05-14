@@ -2,6 +2,7 @@ def repoInfo = 'github/wittyneko/gradle-tools/master/config.groovy'.gitRepoInfo(
 def repoZip = repoInfo.gitRepoZip()
 
 def module_tag = repoInfo.tags
+def module_parent = repoInfo.repository
 def module_name = repoInfo.module.name
 def module_repo = repoInfo.module.repo as File
 def module_cache_dir = new File(repo_caches, module_name.replace('.', '/'))
@@ -33,6 +34,6 @@ new File(module_cache_dir, module_tag).with {
 module_repo.with {
     if (!exists()) {
         parentFile?.mkdirs()
-        new File(module_cache_dir, "$module_tag/gradle-tools-$module_tag").copyTo(it)
+        new File(module_cache_dir, "$module_tag/$module_parent-$module_tag").copyTo(it)
     }
 }
