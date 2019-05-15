@@ -10,8 +10,8 @@ class RepoConfigExtension {
         def module_parent = repoInfo.repository //仓库名
         def filename = repoInfo.filename
         def module_sub = filename.with { substring(0, lastIndexOf('.')) } //子模块
-        def module_name = module_sub.with { 'config' == it ? repoInfo.module.name : "${repoInfo.module.name}.$it"} //library 项目名称
-        def module_repo = module_sub.with { 'config' == it ? repoInfo.module.repo : new File(repoInfo.module.repo, module_sub) } //library 项目目录
+        def module_name = repoInfo.module.name //library 项目名称
+        def module_repo = module_sub.with { 'config' == it ? repoInfo.module.repo : new File(repoInfo.module.repo, it) } //library 项目目录
         def module_cache_dir = new File(repo_caches, module_name.replace('.', '/')) //缓存目录
         def module_cache_file = new File(module_cache_dir, "${module_tag}.zip") //缓存文件名
 

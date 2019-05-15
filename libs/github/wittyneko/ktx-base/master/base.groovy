@@ -6,12 +6,12 @@ def module_parent = repoInfo.repository
 def module_sub = repoInfo.filename.with { substring(0, lastIndexOf('.')) }
 def module_name = "${repoInfo.module.name}.$module_sub"
 def module_repo = new File(repoInfo.module.repo, module_sub)
-def module_cache_dir = new File(repo_caches, module_name.replace('.', '/'))
+def module_cache_dir = new File(repo_caches, repoInfo.module.name.replace('.', '/'))
 def module_cache_file = new File(module_cache_dir, "${module_tag}.zip")
 
 //println "$module_name info: " + repoInfo
 //println "$module_name zip: " + repoZip
-//println "$module_name zip: " + module_tag
+//println "$module_name tag: " + module_tag
 //println "$module_name sub: " + module_sub
 //println "$module_name repo: " + module_repo
 //println "$module_name cache: " + module_cache_dir
