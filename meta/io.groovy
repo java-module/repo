@@ -55,8 +55,7 @@ File.metaClass.unzip = { File destination, boolean overwrite = false ->
 
         def outFile = new File(destination, entry.name)
         println "unzip file://$outFile.canonicalPath"
-        if (outFile.parentFile != null)
-            outFile.parentFile.mkdirs()
+        outFile.parentFile.mkdirs()
         outFile.withOutputStream { outStream ->
 
             zip.getInputStream(entry).withStream { inStream ->
@@ -70,8 +69,9 @@ File.metaClass.copyTo = { File destination, boolean overwrite = false ->
 
     if (overwrite) destination.deleteDir()
 
-    def delegate = delegate as File
+    //def delegate = delegate as File
     def prefix = delegate.canonicalPath.size()
+    println "copy file://$delegate.canonicalPath, file://$destination.canonicalPath"
     delegate.eachFileRecurse(FileType.FILES) { inFile ->
 
         def entryName = inFile.canonicalPath.substring(prefix)

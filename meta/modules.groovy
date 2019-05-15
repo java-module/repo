@@ -33,14 +33,6 @@ String.metaClass.gitRepoInfo = { String name = null, String tag = null, boolean 
 }
 
 Map.metaClass.gitRepoRaw = { String name = null, String tag = null ->
-    //delegate.containsKey('repo') ? {
-    //    def module_path = repo.with {
-    //        "$module_type/$host/$user_repository/${tag != null ? tag : tags}/${name != null ? name : filename}"
-    //    }
-    //    "https://$host/$user_repository/raw/${tags}/${module_path}"
-    //} : {
-    //    "https://$host/$user_repository/raw/${tag != null ? tag : tags}/${name != null ? name : filename}"
-    //}
     "https://$host/$user_repository/raw/${tag != null ? tag : tags}/${name != null ? name : filename}"
 }
 
