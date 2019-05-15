@@ -1,6 +1,7 @@
 import org.gradle.api.initialization.Settings
 
 class RepoConfigExtension {
+    boolean scriptDownload = false
     Collection modules = []
     Closure defDownload = { String module, String repo_caches ->
         def repoInfo = module.gitRepoInfo(null, null, true, 'modules')
@@ -62,7 +63,7 @@ class RepoConfigExtension {
             info_file.with {
                 if (!exists()) {
                     parentFile?.mkdirs()
-                    if (new URL(info_raw).download(it) == 200) {
+                    if (scriptDownload && new URL(info_raw).download(it) == 200) {
                         settings.apply from: info_file
                     } else {
                         defDownload(module, settings.repo_caches)
