@@ -23,6 +23,10 @@ class RepoConfigExtension {
         //println "$module_name repo: " + module_repo
         //println "$module_name cache: " + module_cache_dir
 
+        if (module_repo.exists()) {
+            return
+        }
+
         // 下载缓存
         module_cache_file.with {
             if (!exists()) {
