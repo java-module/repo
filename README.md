@@ -1,7 +1,7 @@
 # repo
-Download the library to import the project
 
-`install.groovy` 会下载到 `$USER_HOME/.gradle/caches/modules-2/resources-2.1/39`
+如果你也碰到需要下载GitHub工程并导入项目使用的话，这个脚本可以帮你完成。  
+具体使用可以参考 [repo_sample](https://github.com/java-module/repo_sample) 工程。
 
 ## TODO
-- [ ] 版本更新
+- [ ] 版本检测更新
